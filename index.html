@@ -29,10 +29,12 @@
       </a>
       <nav class="links" id="links" aria-label="Primary">
         <a href="#research">Research</a>
+        <a href="#projects">Projects</a>
         <a href="#publications">Publications</a>
         <a href="#people">People</a>
+        <a href="#facilities">Facilities</a>
+        <a href="#teaching">Teaching</a>
         <a href="#news">News</a>
-        <a href="#join">Join</a>
         <a href="#contact">Contact</a>
       </nav>
       <div class="nav-actions">
@@ -89,10 +91,25 @@
       </div>
     </section>
 
-    <!-- PUBLICATIONS -->
-    <section class="section" id="publications">
+
+    <!-- PROJECTS -->
+    <section class="section" id="projects">
       <div class="wrap">
-        <p class="kicker mono">03 / Publications</p>
+        <p class="kicker mono">03 / Projects</p>
+        <h2>Funded projects</h2>
+        <p class="section-sub">Sponsored research from NSF, DOE, DoD, US DOT, OCAST, and industry partners. Open any project for objectives, results, and related papers.</p>
+        <div class="proj-controls">
+          <div class="seg" role="tablist" id="proj-status"></div>
+          <div class="chips" id="proj-areas" role="group" aria-label="Filter by area"></div>
+        </div>
+        <div class="proj-grid" id="proj-grid"></div>
+      </div>
+    </section>
+
+    <!-- PUBLICATIONS -->
+    <section class="section alt" id="publications">
+      <div class="wrap">
+        <p class="kicker mono">04 / Publications</p>
         <div class="pub-head">
           <h2>Publications</h2>
           <a class="text-link" id="scholar-link" target="_blank" rel="noopener">Full list on Google Scholar ↗</a>
@@ -113,9 +130,9 @@
     </section>
 
     <!-- PEOPLE -->
-    <section class="section alt" id="people">
+    <section class="section" id="people">
       <div class="wrap">
-        <p class="kicker mono">04 / People</p>
+        <p class="kicker mono">05 / People</p>
         <h2>Our research group</h2>
         <div class="seg" role="tablist" id="people-tabs">
           <button role="tab" data-g="current" aria-selected="true">Current members</button>
@@ -125,11 +142,38 @@
       </div>
     </section>
 
+
+    <!-- FACILITIES -->
+    <section class="section alt" id="facilities">
+      <div class="wrap">
+        <p class="kicker mono">06 / Facilities</p>
+        <h2>Laboratory facilities</h2>
+        <p class="section-sub">Hardware to take algorithms from simulation to real robots, real cells, and real packs.</p>
+        <div class="fac-grid" id="fac-grid"></div>
+      </div>
+    </section>
+
+    <!-- TEACHING -->
+    <section class="section" id="teaching">
+      <div class="wrap teach-grid">
+        <div>
+          <p class="kicker mono">07 / Teaching</p>
+          <h2>Teaching</h2>
+          <div class="seg" role="tablist" id="teach-tabs"></div>
+          <div class="course-list" id="course-list"></div>
+        </div>
+        <aside class="side-stack">
+          <div class="media"><h3>Outreach</h3><ul id="outreach"></ul></div>
+          <div class="media"><h3>Professional service</h3><ul id="service"></ul></div>
+        </aside>
+      </div>
+    </section>
+
     <!-- NEWS -->
-    <section class="section" id="news">
+    <section class="section alt" id="news">
       <div class="wrap news-grid">
         <div>
-          <p class="kicker mono">05 / News</p>
+          <p class="kicker mono">08 / News</p>
           <h2>Recent highlights</h2>
           <div class="chips" id="news-tags" role="group" aria-label="Filter news"></div>
           <ul class="timeline" id="timeline"></ul>
@@ -145,7 +189,7 @@
     <!-- JOIN -->
     <section class="section dark" id="join">
       <div class="wrap">
-        <p class="kicker mono">06 / Join us</p>
+        <p class="kicker mono">09 / Join us</p>
         <h2>Funded Ph.D. positions</h2>
         <p class="section-sub">Each assistantship includes a monthly stipend and a full tuition waiver.</p>
         <div class="positions" id="positions"></div>

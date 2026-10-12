@@ -1,0 +1,37 @@
+[
+  {
+    "id": "control-validation",
+    "name": "Control Validation Space",
+    "room": "ENG 209 & ENG 262",
+    "size": "400 sq ft",
+    "summary": "Hardware validation of control and learning algorithms on mobile robots, drones, and real-time prototyping equipment, backed by GPU computing.",
+    "images": [],
+    "video": "",
+    "equipment": [
+      { "name": "Mobile robots and drones", "specs": ["Fleet for hardware testing of control and learning algorithms"] },
+      { "name": "LIMO mobile robot (Trossen Robotics)", "specs": ["Multi-modal mobile robot platform"] },
+      { "name": "ROS platform", "specs": ["Robot Operating System development and simulation"] },
+      { "name": "OPAL-RT rapid control prototyping", "specs": ["Real-time simulation and hardware-in-the-loop control"] },
+      { "name": "Computing", "specs": ["7 Dell desktop workstations", "2 deep-learning servers with 3× NVIDIA RTX 3090 Ti GPUs", "Access to institutional Linux clusters with NVIDIA V100 GPUs"] },
+      { "name": "Software", "specs": ["MATLAB/Simulink", "LabVIEW", "NI Multisim", "LaTeX"] }
+    ]
+  },
+  {
+    "id": "battery-lab",
+    "name": "Energy Systems and Battery Testing Lab",
+    "room": "ENG 209",
+    "size": "800 sq ft",
+    "summary": "Flagship lithium-ion battery facility for cell and module cycling, environmental testing, impedance spectroscopy, and hardware-in-the-loop BMS validation.",
+    "images": [],
+    "video": "",
+    "equipment": [
+      { "name": "Arbin LBT21162 16-channel cell tester", "specs": ["5 V / 5 A per channel", "Up to 8 channels in parallel for 40 A", "16 Type-T thermocouple inputs", "MTCI interface to environmental chamber", "MITS Pro software"] },
+      { "name": "Arbin LBT22013 high-power module tester", "specs": ["2 channels, 60 V / 100 A each", "Parallel up to 200 A", "Auxiliary voltage, current, and surface-temperature channels", "Supports batteries, supercapacitors, and emerging chemistries"] },
+      { "name": "ESPEC environmental chamber", "specs": ["−70 °C to +180 °C, 10–95% RH", "Interior 19.6 × 15 × 23.6 in, sized for full modules", "Watlow F4T controller, 40 stored profiles", "Remote operation via Web Controller API"] },
+      { "name": "Arbin 10\" MZTC multi-temperature chamber", "specs": ["8 independent mini-chambers", "Each from ambient −10 °C to +60 °C"] },
+      { "name": "Gamry 1010E potentiostat / galvanostat / ZRA", "specs": ["EIS from 10 µHz to 2 MHz", "±12 V, ±1 A, 9 current ranges", "Integrated with Arbin tester for automated EIS during cycling"] },
+      { "name": "Programmable supplies and test equipment", "specs": ["Programmable power supplies and electronic loads", "Handheld and benchtop oscilloscopes", "Function generators"] },
+      { "name": "Reconfigurable HIL cell and module testbed", "status": "Under development", "specs": ["Combines cell tester, module tester, chamber, pack simulator, and OPAL-RT", "CAN-bus coordinated closed-loop BMS validation under mission profiles"] }
+    ]
+  }
+]

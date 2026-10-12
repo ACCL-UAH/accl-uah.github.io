@@ -24,10 +24,12 @@
   async function loadData() {
     if (window.ACCL_DATA) return window.ACCL_DATA; // bundled preview
     const get = f => fetch(`data/${f}.json`, { cache: "no-cache" }).then(r => { if (!r.ok) throw new Error(f); return r.json(); });
-    const [site, people, publications, news] = await Promise.all(["site", "people", "publications", "news"].map(get));
-    return { site, people, publications, news };
+    const names = ["site", "people", "publications", "news", "projects", "facilities", "teaching"];
+    const vals = await Promise.all(names.map(get));
+    return Object.fromEntries(names.map((n, i) => [n, vals[i]]));
   }
 
+  const AREA_LABEL = { control: "Control", ai: "Artificial Intelligence", energy: "Energy Storage", education: "Education", sensing: "Sensing & IoT" };
   /* ---------- Theme ---------- */
   function initTheme() {
     const root = document.documentElement;
@@ -128,7 +130,7 @@
   }
 
   /* ---------- Hero + about ---------- */
-  function renderHero({ site, people, publications }) {
+  function renderHero({ site, people, publications, projects }) {
     const { lab } = site;
     $("#hero-eyebrow").textContent = `${lab.short} · ${lab.university}`;
     $("#hero-tagline").textContent = lab.tagline;
@@ -140,8 +142,7 @@
     const peer = publications.filter(p => ["journal", "conference", "book", "chapter"].includes(p.type)).length;
     const journals = publications.filter(p => p.type === "journal").length;
     const current = people.filter(p => p.group === "current").length;
-    const since = Math.min(...publications.map(p => p.year));
-    const stats = [[peer, "peer-reviewed works"], [journals, "journal articles"], [current, "current members"], [new Date().getFullYear() - since, "years of research"]];
+    const stats = [[peer, "peer-reviewed works"], [journals, "journal articles"], [projects.length, "funded projects"], [current, "current members"]];
     $("#stats").innerHTML = stats.map(([n, l]) => `<div><dt data-n="${n}">0</dt><dd>${l}</dd></div>`).join("");
     $$("#stats dt").forEach(el => countUp(el, +el.dataset.n));
   }
@@ -179,7 +180,7 @@
   }
 
   /* ---------- Research ---------- */
-  function renderResearch({ site, publications }) {
+  function renderResearch({ site, publications, projects }) {
     const tabs = $("#area-tabs"), panel = $("#area-panel");
     tabs.innerHTML = site.areas.map((a, i) =>
       `<button class="area-tab" role="tab" aria-selected="${i === 0}" data-k="${a.key}">${ICONS[a.icon] || ""}${esc(a.title)}</button>`).join("");
@@ -189,10 +190,13 @@
       $$(".area-tab", tabs).forEach(b => b.setAttribute("aria-selected", b.dataset.k === key));
       const rx = AREA_PATTERNS[key];
       const rel = publications.filter(p => p.type !== "abstract" && rx && rx.test(p.title)).sort((x, y) => y.year - x.year).slice(0, 4);
+      const projs = projects.filter(p => p.area === key);
       panel.innerHTML = `
-        <div><h3>Focus topics</h3><ol class="focus-list">${a.items.map(i => `<li>${esc(i)}</li>`).join("")}</ol></div>
+        <div><h3>Focus topics</h3><ol class="focus-list">${a.items.map(i => `<li>${esc(i)}</li>`).join("")}</ol>
+          ${projs.length ? `<div class="related" style="margin-top:22px"><h4>Projects in this area</h4><ul>${projs.map(p =>
+            `<li><a href="detail.html?project=${encodeURIComponent(p.id)}">${esc(p.title)}</a><small>${esc(p.sponsor)} · ${p.status === "current" ? "Current" : "Completed"}</small></li>`).join("")}</ul></div>` : ""}</div>
         <div class="related"><h4>Recent related work</h4><ul>${rel.map(p =>
-          `<li>${p.link ? `<a href="${esc(p.link)}" target="_blank" rel="noopener">${esc(p.title)}</a>` : esc(p.title)}<small>${esc(p.venue)} · ${p.year}</small></li>`).join("")}</ul>
+          `<li><a href="detail.html?paper=${encodeURIComponent(p.id)}">${esc(p.title)}</a><small>${esc(p.venue)} · ${p.year}</small></li>`).join("")}</ul>
           <p><a class="text-link" href="#publications" data-area="${key}">See all related publications →</a></p></div>`;
       $("[data-area]", panel).addEventListener("click", () => {
         const kw = { control: "control", ai: "learning", energy: "battery" }[key];
@@ -270,10 +274,10 @@
         return `<li class="pub">
           <div class="yr">${p.year}</div>
           <div>
-            <p class="t">${hl(p.title, state.q)}</p>
+            <p class="t"><a class="pub-title" href="detail.html?paper=${encodeURIComponent(p.id)}">${hl(p.title, state.q)}</a></p>
             <p class="a">${authors}</p>
             <p class="v">${hl(p.venue, state.q)}</p>
-            <div class="tags"><span class="tag">${TYPE_LABEL[p.type]}</span>${p.status ? `<span class="tag status">${esc(p.status)}</span>` : ""}</div>
+            <div class="tags"><span class="tag">${TYPE_LABEL[p.type]}</span>${p.status ? `<span class="tag status">${esc(p.status)}</span>` : ""}${p.abstract ? `<span class="tag rich">Abstract</span>` : ""}${(p.figures || []).length ? `<span class="tag rich">Results</span>` : ""}${p.video ? `<span class="tag rich">▶ Video</span>` : ""}</div>
           </div>
           ${p.link ? `<a class="go" href="${esc(p.link)}" target="_blank" rel="noopener" aria-label="Open paper">↗</a>` : "<span></span>"}
         </li>`;
@@ -350,7 +354,7 @@
     const q = encodeURIComponent(`${pi.address}`);
     $("#contact-grid").innerHTML = `
       <div class="contact-card">
-        <p class="kicker mono">07 / Contact</p>
+        <p class="kicker mono">10 / Contact</p>
         <h2>Get in touch</h2>
         <p class="body-lg" style="margin:0">Interested in collaborating or joining ${esc(lab.short)}? Reach out directly.</p>
         <dl>
@@ -367,6 +371,85 @@
     });
   }
 
+  /* ---------- Projects ---------- */
+  function renderProjects({ projects }) {
+    const state = { status: "all", area: "all" };
+    const n = s => projects.filter(p => s === "all" || p.status === s).length;
+    $("#proj-status").innerHTML = [["all", "All"], ["current", "Current"], ["completed", "Completed"]]
+      .map(([k, l]) => `<button role="tab" data-s="${k}" aria-selected="${k === "all"}">${l} <span class="c">${n(k)}</span></button>`).join("");
+    const areas = ["all", ...Object.keys(AREA_LABEL).filter(a => projects.some(p => p.area === a))];
+    $("#proj-areas").innerHTML = areas.map(a => `<button class="chip" data-a="${a}" aria-pressed="${a === "all"}">${a === "all" ? "All areas" : AREA_LABEL[a]}</button>`).join("");
+
+    $("#proj-status").addEventListener("click", e => {
+      const b = e.target.closest("button"); if (!b) return;
+      state.status = b.dataset.s; $$("button", $("#proj-status")).forEach(x => x.setAttribute("aria-selected", x === b)); update();
+    });
+    $("#proj-areas").addEventListener("click", e => {
+      const b = e.target.closest(".chip"); if (!b) return;
+      state.area = b.dataset.a; $$(".chip", $("#proj-areas")).forEach(x => x.setAttribute("aria-pressed", x === b)); update();
+    });
+
+    function update() {
+      const res = projects.filter(p => (state.status === "all" || p.status === state.status) && (state.area === "all" || p.area === state.area));
+      $("#proj-grid").innerHTML = res.length ? res.map(p => {
+        const img = (p.images || [])[0];
+        return `<a class="proj" href="detail.html?project=${encodeURIComponent(p.id)}">
+          ${img ? `<img class="proj-img" src="${esc(img.src || img)}" alt="" loading="lazy">` : `<div class="proj-img ph" data-area="${esc(p.area)}">${ICONS[p.area] || ICONS.control}</div>`}
+          <div class="proj-body">
+            <div class="proj-meta"><span class="dot ${p.status}"></span>${p.status === "current" ? "Current" : "Completed"}${p.period ? ` · ${esc(p.period)}` : ""}</div>
+            <h3>${esc(p.title)}</h3>
+            <p class="sponsor">${esc(p.sponsor)}</p>
+            <p class="sum">${esc(p.summary)}</p>
+            <span class="more-link">View project →</span>
+          </div></a>`;
+      }).join("") : `<p class="empty">No projects match.</p>`;
+    }
+    update();
+  }
+
+  /* ---------- Facilities ---------- */
+  function renderFacilities({ facilities }) {
+    $("#fac-grid").innerHTML = facilities.map(f => {
+      const img = (f.images || [])[0];
+      return `<article class="fac reveal">
+        ${img ? `<img class="fac-img" src="${esc(img.src || img)}" alt="${esc(f.name)}" loading="lazy">` : ""}
+        <div class="fac-head">
+          <div><h3>${esc(f.name)}</h3><p class="mono fac-loc">${esc(f.room)}${f.size ? ` · ${esc(f.size)}` : ""}</p></div>
+        </div>
+        <p class="fac-sum">${esc(f.summary)}</p>
+        <div class="equip">${f.equipment.map(e => `
+          <details>
+            <summary>${esc(e.name)}${e.status ? ` <span class="tag status">${esc(e.status)}</span>` : ""}</summary>
+            <ul>${e.specs.map(s => `<li>${esc(s)}</li>`).join("")}</ul>
+          </details>`).join("")}</div>
+        <a class="text-link" href="detail.html?facility=${encodeURIComponent(f.id)}">Photos and details →</a>
+      </article>`;
+    }).join("");
+  }
+
+  /* ---------- Teaching ---------- */
+  function renderTeaching({ teaching }) {
+    const insts = [...new Set(teaching.courses.map(c => c.institution))];
+    const short = i => i.replace("University of Alabama in Huntsville", "UAH").replace("Oklahoma State University", "Oklahoma State");
+    $("#teach-tabs").innerHTML = insts.map((i, k) => `<button role="tab" data-i="${esc(i)}" aria-selected="${k === 0}">${esc(short(i))}</button>`).join("");
+    function show(inst) {
+      $$("button", $("#teach-tabs")).forEach(b => b.setAttribute("aria-selected", b.dataset.i === inst));
+      $("#course-list").innerHTML = teaching.courses.filter(c => c.institution === inst).map(c => `
+        <div class="course">
+          <span class="code mono">${esc(c.code)}</span>
+          <div>
+            <h3>${c.link ? `<a href="${esc(c.link)}" target="_blank" rel="noopener">${esc(c.title)}</a>` : esc(c.title)}</h3>
+            ${c.description ? `<p>${esc(c.description)}</p>` : ""}
+            <div class="tags"><span class="tag">${esc(c.level)}</span>${(c.terms || []).map(t => `<span class="tag">${esc(t)}</span>`).join("")}${c.project ? `<span class="tag rich">Project: ${esc(c.project)}</span>` : ""}</div>
+          </div>
+        </div>`).join("");
+    }
+    $("#teach-tabs").addEventListener("click", e => { const b = e.target.closest("button"); if (b) show(b.dataset.i); });
+    show(insts[0]);
+    $("#outreach").innerHTML = teaching.outreach.map(o => `<li class="side-item"><strong>${o.link ? `<a href="${esc(o.link)}" target="_blank" rel="noopener">${esc(o.title)} ↗</a>` : esc(o.title)}</strong><p>${esc(o.text)}</p></li>`).join("");
+    $("#service").innerHTML = teaching.service.map(s => `<li class="side-item"><strong>${esc(s.title)}</strong><p class="mono">${s.since ? `Since ${esc(s.since)}` : ""}</p></li>`).join("");
+  }
+
   /* ---------- Reveal on scroll ---------- */
   function initReveal() {
     const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), { threshold: .12 });
@@ -380,7 +463,8 @@
     try {
       const data = await loadData();
       renderHero(data); renderAbout(data); renderResearch(data);
-      renderPublications(data); renderPeople(data); renderNews(data);
+      renderProjects(data); renderPublications(data); renderPeople(data);
+      renderFacilities(data); renderTeaching(data); renderNews(data);
       renderJoin(data); renderContact(data);
       initReveal();
     } catch (err) {
