@@ -458,7 +458,7 @@
     $("#teach-tabs").addEventListener("click", e => { const b = e.target.closest("button"); if (b) show(b.dataset.i); });
     show(insts[0]);
     $("#outreach").innerHTML = teaching.outreach.map(o => `<li class="side-item"><strong>${o.link ? `<a href="${esc(o.link)}" target="_blank" rel="noopener">${esc(o.title)} ↗</a>` : esc(o.title)}</strong><p>${esc(o.text)}</p></li>`).join("");
-    $("#service").innerHTML = teaching.service.map(s => `<li class="side-item"><strong>${esc(s.title)}</strong><p class="mono">${s.since ? `Since ${esc(s.since)}` : ""}</p></li>`).join("");
+    $("#service").innerHTML = teaching.service.map(s => `<li class="side-item"><strong>${esc(s.title)}</strong><p class="mono">${s.from ? `${esc(s.from)} – ${s.to ? esc(s.to) : "present"}` : s.since ? `Since ${esc(s.since)}` : ""}</p></li>`).join("");
   }
 
   /* ---------- Reveal on scroll ---------- */
