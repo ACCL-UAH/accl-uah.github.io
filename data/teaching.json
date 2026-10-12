@@ -170,11 +170,12 @@
   "service": [
     {
       "title": "Associate Editor, IEEE Transactions on Neural Networks and Learning Systems",
-      "since": "2023"
+      "From": "2023"
+      "To":"2024"
     },
     {
-      "title": "Panelist, National Science Foundation proposal review",
-      "since": "2023"
+       "title": "Associate Editor, IEEE Transactions on Cybernetics",
+      "Since": "2025"
     }
   ]
 }
