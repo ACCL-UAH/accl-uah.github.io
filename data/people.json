@@ -1,0 +1,15 @@
+[
+  { "name": "Md. Sazzad Hossen", "group": "current", "level": "Ph.D. Student", "program": "Electrical and Computer Engineering, UAH", "topic": "Graph neural networks", "when": "Expected Fall 2026", "photo": "" },
+  { "name": "Vishwa Kumar", "group": "current", "level": "Ph.D. Student", "program": "Industrial Engineering and Management", "topic": "", "when": "Expected Spring 2026", "photo": "" },
+  { "name": "Timothy Morgan", "group": "current", "level": "Ph.D. Student", "program": "Electrical and Computer Engineering, UAH", "topic": "Efficient electrochemical impedance spectroscopy and modeling", "when": "Expected Fall 2026", "photo": "" },
+  { "name": "Saima Alam", "group": "current", "level": "M.S. Student", "program": "Electrical and Computer Engineering, UAH", "topic": "Lithium-ion battery pack modeling and health management for smart BMS", "when": "Expected Fall 2025", "photo": "" },
+  { "name": "Anshika Sinha", "group": "current", "level": "B.S. Student, Computer Engineering", "program": "Electrical and Computer Engineering, UAH", "topic": "Development of an autonomous vehicle simulator", "when": "Since Fall 2025", "photo": "" },
+  { "name": "Wyatt Howard", "group": "current", "level": "B.S. Student, Computer Engineering", "program": "Electrical and Computer Engineering, UAH", "topic": "Development of an autonomous vehicle simulator", "when": "Since Fall 2025", "photo": "" },
+
+  { "name": "Geetika Vennam", "group": "alumni", "level": "Ph.D., Electrical and Computer Engineering", "program": "Oklahoma State University", "topic": "Health-inclusive lithium-ion battery modeling, state estimation, and fault detection", "when": "Graduated Fall 2022", "now": "Postdoctoral Research Scientist, Idaho National Laboratory", "photo": "" },
+  { "name": "Arian Yousefian", "group": "alumni", "level": "Ph.D., Electrical Engineering", "program": "Electrical and Computer Engineering, UAH", "topic": "", "when": "Graduated Summer 2025", "photo": "" },
+  { "name": "Mahtab Noor Shaan", "group": "alumni", "level": "M.S., Electrical Engineering", "program": "Electrical and Computer Engineering, UAH", "topic": "Safe reinforcement learning for control of robotic inspection vehicles", "when": "Graduated Summer 2025", "photo": "" },
+  { "name": "Md. Sazzad Hossen", "group": "alumni", "level": "M.S., Electrical Engineering", "program": "Electrical and Computer Engineering, UAH", "topic": "", "when": "Graduated Summer 2024", "photo": "" },
+  { "name": "William Current", "group": "alumni", "level": "B.S., Electrical Engineering", "program": "Electrical and Computer Engineering, UAH", "topic": "Development of an autonomous vehicle simulator", "when": "Graduated Spring 2023", "photo": "" },
+  { "name": "Sophia Lopez", "group": "alumni", "level": "B.S., Cyber Security", "program": "Electrical and Computer Engineering, UAH", "topic": "ROS-based simulation platform for autonomous systems", "when": "", "photo": "" }
+]

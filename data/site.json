@@ -1,0 +1,118 @@
+{
+  "lab": {
+    "short": "ACCL",
+    "name": "Autonomous Cognition and Control Laboratory",
+    "tagline": "Research at the convergence of control theory and artificial intelligence, with applications in robotics, energy storage, and fault diagnostics and prognostics.",
+    "about": "Our group focuses on research at the convergence of control theory and artificial intelligence and their applications in robotics, energy storage, and fault diagnostics and prognostics. We aim to develop resource-aware control, computationally efficient real-time learning, and smart battery management systems for health-conscious decision-making.",
+    "university": "University of Alabama in Huntsville",
+    "department": "Department of Electrical and Computer Engineering",
+    "announcement": {
+      "text": "Ph.D. positions available in Robotics, Control, Deep & Reinforcement Learning, and Energy Storage.",
+      "link": "#join"
+    }
+  },
+  "pi": {
+    "name": "Avimanyu Sahoo, Ph.D.",
+    "title": "Assistant Professor",
+    "department": "Electrical and Computer Engineering",
+    "university": "University of Alabama in Huntsville",
+    "email": "avimanyu.sahoo@uah.edu",
+    "phone": "256-824-3581",
+    "office": "Engineering Building, Room 263H",
+    "address": "301 Sparkman Drive, Huntsville, AL 35899",
+    "photo": "",
+    "links": [
+      { "label": "Google Scholar", "url": "https://scholar.google.com/citations?user=0h-0qjIAAAAJ&hl=en" },
+      { "label": "LinkedIn", "url": "https://www.linkedin.com/in/avimanyu-sahoo-26a55731/" },
+      { "label": "ResearchGate", "url": "https://www.researchgate.net/profile/Avimanyu-Sahoo" }
+    ]
+  },
+  "themes": [
+    {
+      "title": "Control of Cyber-Physical Systems",
+      "text": "Spatially distributed systems bring spatiotemporal behavior, heavy communication requirements, network constraints, and privacy and security vulnerabilities. Networked autonomous systems must learn uncertain dynamics, detect impending failures or attacks, isolate compromised components, adapt control, and resume stable operation."
+    },
+    {
+      "title": "Artificial Intelligence for Control",
+      "text": "Real-time learning for control is notoriously challenging. Resource-constrained edge devices, the need for dependable and provable behavior, and safety, security, and verification in human-in- and human-on-the-loop systems make implementation harder."
+    }
+  ],
+  "areas": [
+    {
+      "key": "control",
+      "title": "Control",
+      "icon": "control",
+      "items": [
+        "Autonomous cognition for inference and filtering",
+        "Security and privacy of learning-based controllers",
+        "Resource-aware optimal control"
+      ]
+    },
+    {
+      "key": "ai",
+      "title": "Artificial Intelligence",
+      "icon": "ai",
+      "items": [
+        "Real-time learning for control",
+        "Event-based reinforcement learning",
+        "Deep learning for visual inspection",
+        "Safe deep reinforcement learning for navigation and path planning"
+      ]
+    },
+    {
+      "key": "energy",
+      "title": "Energy Storage",
+      "icon": "energy",
+      "items": [
+        "Lithium-ion cell/pack modeling",
+        "Smart battery management systems",
+        "Fault detection of Li-ion cells",
+        "Health-conscious fast charging"
+      ]
+    }
+  ],
+  "applications": [
+    {
+      "title": "Intelligent Battery Management",
+      "text": "Lithium-ion batteries are the workhorse of electric vehicles. Key challenges include accurate state-of-health estimation, real-time learning of battery models, internal fault detection, and vulnerability to thermal runaway."
+    },
+    {
+      "title": "Electric Machinery Health Management",
+      "text": "Embedding machines with intelligent fault diagnostics and prognostics algorithms so they can self-detect faults and predict remaining useful life, avoiding unplanned downtime and cost."
+    }
+  ],
+  "media": [
+    { "label": "UAH News: $300K NSF award for cyber-physical systems", "url": "https://www.uah.edu/news/items/uah-researcher-wins-300k-nsf-award-cyber-physical-systems" },
+    { "label": "UAH Magazine, Summer 2024", "url": "https://t.e2ma.net/webview/ph5qlh/4a357493a2abc164d3c374ea8a5a9b5d" },
+    { "label": "UAH News: NSF EPSCoR fellowship on Li-ion battery pack safety", "url": "https://www.uah.edu/news/items/uah-researcher-wins-279k-nsf-epscor-fellowship-to-explore-preventing-catastrophic-failures-in-lithium-ion-battery-packs-in-electric-vehicles" },
+    { "label": "UAH News: Three grants totaling $650K for learning-based controls", "url": "https://www.uah.edu/news/news/uah-researcher-wins-three-grants-totaling-650k-to-tap-learning-based-controls" },
+    { "label": "Fox54 News: Improving the safety of electric vehicles", "url": "https://www.rocketcitynow.com/video/news/local/uah-grant-research-technology-improve-the-safety-of-electric-vehicles/525-a3eb23f9-4d9d-4789-af54-71e29a52ad72" },
+    { "label": "SIAM News: Learning-based faulty state estimation in Li-ion batteries", "url": "https://sinews.siam.org/Details-Page/learning-based-faulty-state-estimation-in-lithium-ion-batteries" },
+    { "label": "NSF REU Site", "url": "https://sites.google.com/uah.edu/uah-reu/home" }
+  ],
+  "positions": [
+    {
+      "title": "Robotics and Control",
+      "summary": "One funded Ph.D. Research Assistant position in robotics and control using deep reinforcement learning and machine vision. Includes a monthly stipend and full tuition waiver.",
+      "qualifications": [
+        "Master's or Bachelor's degree in Electrical Engineering or a closely related field",
+        "Experience in mobile robot path planning, motion control, and machine learning",
+        "Good mathematical and analytical skills",
+        "Proficiency in Python and MATLAB/Simulink",
+        "Prior conference or journal publications are a plus"
+      ]
+    },
+    {
+      "title": "Lithium-ion Battery Health Management",
+      "summary": "One funded Ph.D. Research Assistant position in lithium-ion battery modeling, state estimation, and health management. Includes a monthly stipend and full tuition waiver.",
+      "qualifications": [
+        "Master's degree in Electrical Engineering or a closely related field",
+        "Experience in Li-ion battery state estimation, health monitoring, control, and machine learning",
+        "Good mathematical and analytical skills",
+        "Proficiency in Python and MATLAB",
+        "Prior conference or journal publications are a plus"
+      ]
+    }
+  ],
+  "howToApply": "Send your CV and TOEFL scores (international applicants) to avimanyu.sahoo@uah.edu."
+}
