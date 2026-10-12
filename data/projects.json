@@ -41,6 +41,7 @@
       "Continual learning inside the BMS for health-conscious decision-making"
     ],
     "publications": [
+      "2026-pinn-surrogate-lithiumion-cells-continual-learning",
       "2025-realpinn-physicsinformed-neural-network-realtime",
       "2024-continual-learning-lithiumion-battery-management",
       "2024-learning-lithiumion-battery-health-realtime"
@@ -185,6 +186,7 @@
       "Meta-learning and graph neural network architectures for few-shot defect detection"
     ],
     "publications": [
+      "2026-maximizing-unlabeled-data-utility-pseudo-labeling",
       "2025-metarep-improving-metalearning-accuracy-learning",
       "2024-bepic-binary-episodes-metalearning",
       "2023-binary-metalearning-towards-better-generalization",
