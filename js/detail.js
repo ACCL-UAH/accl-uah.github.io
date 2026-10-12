@@ -118,7 +118,7 @@
       crumb: ["Publications", "publications"],
       kicker: `${TYPE_LABEL[p.type] || ""} · ${p.year}${p.status ? ` · ${esc(p.status)}` : ""}`,
       title: p.title,
-      sub: `<p class="d-authors">${boldPI(p.authors)}</p>`,
+      sub: `${p.featured ? `<p><span class="star-badge on-dark">★ ${esc(p.featured)}</span></p>` : ""}<p class="d-authors">${boldPI(p.authors)}</p>`,
       meta: `<span><b>${esc(p.venue)}</b></span>`,
       actions: btn(doi ? "View paper (DOI)" : "View paper", p.link, true) + btn("PDF", p.pdf) + btn("Code", p.code) + btn("Slides", p.slides) + btn("Dataset", p.dataset) + extraLinks(p.links)
     }) + `<div class="wrap d-body"><div>${body}</div>

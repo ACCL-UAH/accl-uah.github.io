@@ -214,6 +214,16 @@
     const state = { q: "", type: "all", year: "all", limit: 15 };
     const list = $("#pub-list"), more = $("#pub-more"), count = $("#pub-count");
 
+    // Featured papers (any entry with a "featured" label) get a spotlight card above the list.
+    const feat = publications.filter(p => p.featured).sort((a, b) => b.year - a.year);
+    $("#pub-featured").innerHTML = feat.map(p => `
+      <a class="feat-card" data-mark="${esc(p.featured.split(/\s/)[0])}" href="detail.html?paper=${encodeURIComponent(p.id)}">
+        <span class="feat-label mono">★ Featured · ${esc(p.featured)}</span>
+        <span class="feat-title">${esc(p.title)}</span>
+        <span class="feat-meta">${esc(p.authors).replace(/(A(?:vimanyu|\.)\s*Sahoo)/g, "<b>$1</b>")} · ${esc(p.venue)}, ${p.year}</span>
+        <span class="feat-go">Read more →</span>
+      </a>`).join("");
+
     // type chips
     const types = ["all", ...Object.keys(TYPE_LABEL).filter(t => publications.some(p => p.type === t))];
     $("#pub-types").innerHTML = types.map(t => {
@@ -271,9 +281,10 @@
 
       list.innerHTML = res.slice(0, state.limit).map(p => {
         const authors = hl(p.authors, state.q).replace(/(A(?:vimanyu|\.)\s*Sahoo)/g, "<b>$1</b>");
-        return `<li class="pub">
+        return `<li class="pub${p.featured ? " featured" : ""}">
           <div class="yr">${p.year}</div>
           <div>
+            ${p.featured ? `<span class="star-badge">★ ${esc(p.featured)}</span>` : ""}
             <p class="t"><a class="pub-title" href="detail.html?paper=${encodeURIComponent(p.id)}">${hl(p.title, state.q)}</a></p>
             <p class="a">${authors}</p>
             <p class="v">${hl(p.venue, state.q)}</p>

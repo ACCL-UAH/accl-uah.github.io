@@ -364,3 +364,20 @@ pre.bib { background: var(--bg-alt); border: 1px solid var(--line); border-radiu
 .lightbox img { max-width: 100%; max-height: 88vh; border-radius: 8px; background: #fff; }
 .lightbox p { color: #d6dfea; text-align: center; margin: 12px 0 0; }
 .notfound { padding: 120px 0; text-align: center; }
+
+/* ===== Featured publications ===== */
+.pub-featured { display: grid; gap: 14px; margin: 8px 0 28px; }
+.pub-featured:empty { display: none; }
+.feat-card { position: relative; display: flex; flex-direction: column; gap: 6px; padding: 24px 26px; border-radius: var(--radius); text-decoration: none; color: #e9eef5; background: radial-gradient(120% 140% at 100% 0%, #2a3f66 0%, var(--ink) 55%); border: 1px solid #2a4167; overflow: hidden; transition: transform .2s, box-shadow .2s; }
+.feat-card::after { content: attr(data-mark); position: absolute; right: 18px; bottom: -18px; font: 700 6.5rem/1 var(--font-h); color: rgba(245,165,36,.08); letter-spacing: -.04em; pointer-events: none; }
+.feat-card:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(11,26,46,.25); }
+.feat-label { color: var(--signal); font-size: .78rem; letter-spacing: .06em; text-transform: uppercase; }
+.feat-title { font: 600 clamp(1.1rem, 2.2vw, 1.4rem)/1.3 var(--font-h); color: #fff; max-width: 52ch; position: relative; z-index: 1; }
+.feat-meta { color: #b9c6d6; font-size: .92rem; position: relative; z-index: 1; }
+.feat-meta b { color: var(--signal); font-weight: 600; }
+.feat-go { color: var(--signal); font-weight: 600; font-size: .9rem; margin-top: 4px; }
+.pub.featured { border-color: var(--signal); box-shadow: inset 4px 0 0 var(--signal); }
+.star-badge { display: inline-block; font: 600 .72rem var(--font-m); text-transform: uppercase; letter-spacing: .04em; color: #6b4300; background: #fff1d6; border: 1px solid #f5c873; padding: 3px 9px; border-radius: 999px; margin-bottom: 6px; }
+.star-badge.on-dark { color: #241600; background: var(--signal); border-color: var(--signal); margin: 4px 0 2px; }
+:root[data-theme="dark"] .star-badge:not(.on-dark) { color: var(--signal); background: #3a2c0d; border-color: #6b4d12; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .star-badge:not(.on-dark) { color: var(--signal); background: #3a2c0d; border-color: #6b4d12; } }
