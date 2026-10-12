@@ -6,7 +6,10 @@
     "title": "Vulnerability Characterization of Learning-Based Controllers in Networked Cyber-Physical Systems",
     "sponsor": "National Science Foundation (NSF)",
     "award": "Award #2337999 and #2337998 (collaborative)",
-    "awardLinks": ["https://www.nsf.gov/awardsearch/showAward?AWD_ID=2337999", "https://www.nsf.gov/awardsearch/showAward?AWD_ID=2337998"],
+    "awardLinks": [
+      "https://www.nsf.gov/awardsearch/showAward?AWD_ID=2337999",
+      "https://www.nsf.gov/awardsearch/showAward?AWD_ID=2337998"
+    ],
     "period": "",
     "collaborators": [],
     "summary": "Studies how adversarial information patterns can deceive learning-based controllers in cyber-physical systems such as smart grids, robotic swarms, and autonomous vehicles, steering them toward biased or unsafe actions. The goal is secure-by-design solutions for safety-critical CPS.",
@@ -26,7 +29,9 @@
     "title": "Spatio-temporal Modeling of Lithium-ion Battery Packs",
     "sponsor": "NSF EPSCoR Research Fellowship",
     "award": "Award #2327409",
-    "awardLinks": ["https://www.nsf.gov/awardsearch/showAward?AWD_ID=2327409"],
+    "awardLinks": [
+      "https://www.nsf.gov/awardsearch/showAward?AWD_ID=2327409"
+    ],
     "period": "",
     "collaborators": [],
     "summary": "Cell-level battery models miss the strongly interconnected electro-thermal-aging behavior of real packs. This project develops a high-fidelity pack model at cell and module granularity and embeds continual learning in the battery management system for health-aware decisions that prevent failures and thermal runaway.",
@@ -35,8 +40,17 @@
       "A deep neural network learning scheme that captures spatial and temporal pack dynamics",
       "Continual learning inside the BMS for health-conscious decision-making"
     ],
-    "publications": ["2025-realpinn-physicsinformed-neural-network-realtime", "2024-continual-learning-lithiumion-battery-management", "2024-learning-lithiumion-battery-health-realtime"],
-    "links": [{ "label": "UAH News coverage", "url": "https://www.uah.edu/news/items/uah-researcher-wins-279k-nsf-epscor-fellowship-to-explore-preventing-catastrophic-failures-in-lithium-ion-battery-packs-in-electric-vehicles" }],
+    "publications": [
+      "2025-realpinn-physicsinformed-neural-network-realtime",
+      "2024-continual-learning-lithiumion-battery-management",
+      "2024-learning-lithiumion-battery-health-realtime"
+    ],
+    "links": [
+      {
+        "label": "UAH News coverage",
+        "url": "https://www.uah.edu/news/items/uah-researcher-wins-279k-nsf-epscor-fellowship-to-explore-preventing-catastrophic-failures-in-lithium-ion-battery-packs-in-electric-vehicles"
+      }
+    ],
     "images": [],
     "video": ""
   },
@@ -47,9 +61,14 @@
     "title": "NSF REU Site: Smart Personal Protective Equipment (SmaPP)",
     "sponsor": "National Science Foundation (NSF)",
     "award": "Award #2244294 and #2244293 (collaborative)",
-    "awardLinks": ["https://www.nsf.gov/awardsearch/showAward?AWD_ID=2244294", "https://www.nsf.gov/awardsearch/showAward?AWD_ID=2244293"],
+    "awardLinks": [
+      "https://www.nsf.gov/awardsearch/showAward?AWD_ID=2244294",
+      "https://www.nsf.gov/awardsearch/showAward?AWD_ID=2244293"
+    ],
     "period": "Summers, 10 weeks each year",
-    "collaborators": ["Division of Engineering Technology, Oklahoma State University"],
+    "collaborators": [
+      "Division of Engineering Technology, Oklahoma State University"
+    ],
     "summary": "Nine undergraduates per summer (five at OSU, four at UAH ECE) gain multidisciplinary research experience on Smart Personal Protective Equipment: smart materials, heat flux measurement, wireless sensing of vital signs and radiation, and human perception of SmaPP.",
     "objectives": [
       "Provide multidisciplinary research experience to undergraduates",
@@ -63,8 +82,15 @@
       "Wireless vital-sign and radiation sensors",
       "Study of protective mask use on campus during COVID-19"
     ],
-    "publications": ["2025-multidisciplinary-collaborative-undergraduate-research-experience"],
-    "links": [{ "label": "REU site", "url": "https://sites.google.com/uah.edu/uah-reu/home" }],
+    "publications": [
+      "2025-multidisciplinary-collaborative-undergraduate-research-experience"
+    ],
+    "links": [
+      {
+        "label": "REU site",
+        "url": "https://sites.google.com/uah.edu/uah-reu/home"
+      }
+    ],
     "images": [],
     "video": ""
   },
@@ -76,14 +102,20 @@
     "sponsor": "Naval Surface Warfare Center, Panama City Division (DoD)",
     "award": "",
     "period": "",
-    "collaborators": ["Vignesh Narayanan, University of South Carolina"],
+    "collaborators": [
+      "Vignesh Narayanan, University of South Carolina"
+    ],
     "summary": "Networked autonomous heterogeneous agents (NAHA) in uncertain naval environments must operate beyond consensus-based control, coping with limited communication, data privacy, and the need to isolate compromised agents.",
     "objectives": [
       "Aperiodic communication protocols for distributed agents",
       "Privacy-preserving, scalable learning for inference and filtering",
       "Resource-conscious control robust to communication loss that can isolate compromised agents"
     ],
-    "publications": ["2024-aperiodic-discretetime-control-optimizing-tradeoff", "2023-optimal-sampling-communication-distributed-control", "2025-novel-online-system-identification-chebyshev"],
+    "publications": [
+      "2024-aperiodic-discretetime-control-optimizing-tradeoff",
+      "2023-optimal-sampling-communication-distributed-control",
+      "2025-novel-online-system-identification-chebyshev"
+    ],
     "images": [],
     "video": ""
   },
@@ -95,14 +127,20 @@
     "sponsor": "U.S. Department of Energy (DOE)",
     "award": "",
     "period": "",
-    "collaborators": ["Huaxia Wang, Oklahoma State University", "Baker Hughes, Oklahoma City"],
+    "collaborators": [
+      "Huaxia Wang, Oklahoma State University",
+      "Baker Hughes, Oklahoma City"
+    ],
     "summary": "Robotic visual inspection of pipes, tanks, and hard-to-reach parts in energy, hydrogen, and carbon-capture infrastructure is still human-operated, slow, and error-prone. This project builds an AI-driven inspection platform with autonomous navigation and real-time defect identification.",
     "objectives": [
       "Autonomous dynamic path planning and safe navigation",
       "Closed-loop data collection",
       "Real-time defect identification using deep learning on multimodal data"
     ],
-    "publications": ["2024-multilabel-defect-classification-large-concrete", "2023-graph-neural-networks-visual-defect"],
+    "publications": [
+      "2024-multilabel-defect-classification-large-concrete",
+      "2023-graph-neural-networks-visual-defect"
+    ],
     "images": [],
     "video": ""
   },
@@ -120,7 +158,12 @@
       "Self-learning distributed control that is computationally efficient",
       "Inherently secure schemes that perform well under network constraints"
     ],
-    "publications": ["2021-resource-aware-learningbased-optimal-control", "2021-adaptive-gain-observers-distributed-state", "2020-differential-game-resourceaware-approximate-optimal", "2019-optimal-hybrid-learning-approach-attack"],
+    "publications": [
+      "2021-resource-aware-learningbased-optimal-control",
+      "2021-adaptive-gain-observers-distributed-state",
+      "2020-differential-game-resourceaware-approximate-optimal",
+      "2019-optimal-hybrid-learning-approach-attack"
+    ],
     "images": [],
     "video": ""
   },
@@ -132,13 +175,22 @@
     "sponsor": "Oklahoma Center for the Advancement of Science and Technology (OCAST) and Baker Hughes",
     "award": "",
     "period": "2022 – 2024",
-    "collaborators": ["Huaxia Wang, Oklahoma State University", "Baker Hughes, Oklahoma City"],
+    "collaborators": [
+      "Huaxia Wang, Oklahoma State University",
+      "Baker Hughes, Oklahoma City"
+    ],
     "summary": "AI-driven detection of cracks, spots, and corrosion for video borescopes that inspect narrow cavities. Deep learning needs large labeled datasets, which are scarce in this setting.",
     "objectives": [
       "Algorithms that learn from both labeled and unlabeled data",
       "Meta-learning and graph neural network architectures for few-shot defect detection"
     ],
-    "publications": ["2025-metarep-improving-metalearning-accuracy-learning", "2023-binary-metalearning-towards-better-generalization", "2023-metatasks-improving-robustness-fewshot-classification", "2023-graph-neural-networks-visual-defect"],
+    "publications": [
+      "2025-metarep-improving-metalearning-accuracy-learning",
+      "2024-bepic-binary-episodes-metalearning",
+      "2023-binary-metalearning-towards-better-generalization",
+      "2023-metatasks-improving-robustness-fewshot-classification",
+      "2023-graph-neural-networks-visual-defect"
+    ],
     "images": [],
     "video": ""
   },
@@ -156,7 +208,10 @@
       "An incipient internal-fault detection scheme with root-cause analysis",
       "A computationally efficient neural network suitable for embedded hardware"
     ],
-    "publications": ["2023-learningbased-faulty-state-estimation-sohcoupled", "2023-core-temperature-estimation-lithiumion-batteries"],
+    "publications": [
+      "2023-learningbased-faulty-state-estimation-sohcoupled",
+      "2023-core-temperature-estimation-lithiumion-batteries"
+    ],
     "images": [],
     "video": ""
   },
@@ -174,7 +229,12 @@
       "Accurate SOC and SOH estimation",
       "Support for charging optimization and power/energy management"
     ],
-    "publications": ["2022-dynamic-sohcoupled-lithiumion-cell-model", "2022-survey-lithiumion-battery-internal-external", "2022-novel-coupled-electrothermalaging-model-simultaneous", "2019-simultaneous-state-parameter-estimation-lithiumion"],
+    "publications": [
+      "2022-dynamic-sohcoupled-lithiumion-cell-model",
+      "2022-survey-lithiumion-battery-internal-external",
+      "2022-novel-coupled-electrothermalaging-model-simultaneous",
+      "2019-simultaneous-state-parameter-estimation-lithiumion"
+    ],
     "images": [],
     "video": ""
   },
@@ -204,7 +264,9 @@
     "sponsor": "Technology and Business Development Office, Oklahoma State University",
     "award": "",
     "period": "",
-    "collaborators": ["Haejun Park, Oklahoma State University"],
+    "collaborators": [
+      "Haejun Park, Oklahoma State University"
+    ],
     "summary": "An IoT wireless sensor that measures heat flux in fire conditions so firefighters can assess ignition risk and allocate resources, removing the need for water-cooled sensors with their tubing and wiring.",
     "objectives": [
       "Transmit over cellular networks with low power and low data usage",
