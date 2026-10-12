@@ -170,12 +170,12 @@
   "service": [
     {
       "title": "Associate Editor, IEEE Transactions on Neural Networks and Learning Systems",
-      "From": "2023"
-      "To":"2024"
+      "from": "2023",
+      "to": "2024"
     },
     {
-       "title": "Associate Editor, IEEE Transactions on Cybernetics",
-      "Since": "2025"
+      "title": "Associate Editor, IEEE Transactions on Cybernetics",
+      "since": "2025"
     }
   ]
 }
