@@ -18,7 +18,9 @@
       "Multi-level attacks on reward signals in distributed control using multiplayer Nash games",
       "Data-enabled detection strategies"
     ],
-    "publications": [],
+    "publications": [
+      "2026-stealthy-reward-poisoning-continuous-time-lti"
+    ],
     "images": [],
     "video": ""
   },
@@ -41,6 +43,8 @@
       "Continual learning inside the BMS for health-conscious decision-making"
     ],
     "publications": [
+      "2026-sparse-frequency-eis-impedance-reconstruction",
+      "2026-laplacian-based-modeling-thermal-interactions-battery-packs",
       "2026-pinn-surrogate-lithiumion-cells-continual-learning",
       "2025-realpinn-physicsinformed-neural-network-realtime",
       "2024-continual-learning-lithiumion-battery-management",
@@ -139,6 +143,7 @@
       "Real-time defect identification using deep learning on multimodal data"
     ],
     "publications": [
+      "2026-resource-constrained-safe-rl-lane-following",
       "2024-multilabel-defect-classification-large-concrete",
       "2023-graph-neural-networks-visual-defect"
     ],
@@ -160,6 +165,7 @@
       "Inherently secure schemes that perform well under network constraints"
     ],
     "publications": [
+      "2026-co-synthesizing-communication-control-cps",
       "2021-resource-aware-learningbased-optimal-control",
       "2021-adaptive-gain-observers-distributed-state",
       "2020-differential-game-resourceaware-approximate-optimal",
