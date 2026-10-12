@@ -22,9 +22,18 @@
     "address": "301 Sparkman Drive, Huntsville, AL 35899",
     "photo": "",
     "links": [
-      { "label": "Google Scholar", "url": "https://scholar.google.com/citations?user=0h-0qjIAAAAJ&hl=en" },
-      { "label": "LinkedIn", "url": "https://www.linkedin.com/in/avimanyu-sahoo-26a55731/" },
-      { "label": "ResearchGate", "url": "https://www.researchgate.net/profile/Avimanyu-Sahoo" }
+      {
+        "label": "Google Scholar",
+        "url": "https://scholar.google.com/citations?user=0h-0qjIAAAAJ&hl=en"
+      },
+      {
+        "label": "LinkedIn",
+        "url": "https://www.linkedin.com/in/avimanyu-sahoo-26a55731/"
+      },
+      {
+        "label": "ResearchGate",
+        "url": "https://www.researchgate.net/profile/Avimanyu-Sahoo"
+      }
     ]
   },
   "themes": [
@@ -56,7 +65,7 @@
         "Real-time learning for control",
         "Event-based reinforcement learning",
         "Deep learning for visual inspection",
-        "Safe deep reinforcement learning for navigation and path planning"
+        "Physics-informed and graph neural networks"
       ]
     },
     {
@@ -68,6 +77,17 @@
         "Smart battery management systems",
         "Fault detection of Li-ion cells",
         "Health-conscious fast charging"
+      ]
+    },
+    {
+      "key": "robotics",
+      "title": "Robotics",
+      "icon": "robotics",
+      "items": [
+        "Safe deep reinforcement learning for navigation and path planning",
+        "Autonomous robotic inspection of energy infrastructure",
+        "Safe, data-enabled control of human-in-the-loop manipulators",
+        "ROS-based simulation for autonomous vehicles"
       ]
     }
   ],
@@ -82,13 +102,34 @@
     }
   ],
   "media": [
-    { "label": "UAH News: $300K NSF award for cyber-physical systems", "url": "https://www.uah.edu/news/items/uah-researcher-wins-300k-nsf-award-cyber-physical-systems" },
-    { "label": "UAH Magazine, Summer 2024", "url": "https://t.e2ma.net/webview/ph5qlh/4a357493a2abc164d3c374ea8a5a9b5d" },
-    { "label": "UAH News: NSF EPSCoR fellowship on Li-ion battery pack safety", "url": "https://www.uah.edu/news/items/uah-researcher-wins-279k-nsf-epscor-fellowship-to-explore-preventing-catastrophic-failures-in-lithium-ion-battery-packs-in-electric-vehicles" },
-    { "label": "UAH News: Three grants totaling $650K for learning-based controls", "url": "https://www.uah.edu/news/news/uah-researcher-wins-three-grants-totaling-650k-to-tap-learning-based-controls" },
-    { "label": "Fox54 News: Improving the safety of electric vehicles", "url": "https://www.rocketcitynow.com/video/news/local/uah-grant-research-technology-improve-the-safety-of-electric-vehicles/525-a3eb23f9-4d9d-4789-af54-71e29a52ad72" },
-    { "label": "SIAM News: Learning-based faulty state estimation in Li-ion batteries", "url": "https://sinews.siam.org/Details-Page/learning-based-faulty-state-estimation-in-lithium-ion-batteries" },
-    { "label": "NSF REU Site", "url": "https://sites.google.com/uah.edu/uah-reu/home" }
+    {
+      "label": "UAH News: $300K NSF award for cyber-physical systems",
+      "url": "https://www.uah.edu/news/items/uah-researcher-wins-300k-nsf-award-cyber-physical-systems"
+    },
+    {
+      "label": "UAH Magazine, Summer 2024",
+      "url": "https://t.e2ma.net/webview/ph5qlh/4a357493a2abc164d3c374ea8a5a9b5d"
+    },
+    {
+      "label": "UAH News: NSF EPSCoR fellowship on Li-ion battery pack safety",
+      "url": "https://www.uah.edu/news/items/uah-researcher-wins-279k-nsf-epscor-fellowship-to-explore-preventing-catastrophic-failures-in-lithium-ion-battery-packs-in-electric-vehicles"
+    },
+    {
+      "label": "UAH News: Three grants totaling $650K for learning-based controls",
+      "url": "https://www.uah.edu/news/news/uah-researcher-wins-three-grants-totaling-650k-to-tap-learning-based-controls"
+    },
+    {
+      "label": "Fox54 News: Improving the safety of electric vehicles",
+      "url": "https://www.rocketcitynow.com/video/news/local/uah-grant-research-technology-improve-the-safety-of-electric-vehicles/525-a3eb23f9-4d9d-4789-af54-71e29a52ad72"
+    },
+    {
+      "label": "SIAM News: Learning-based faulty state estimation in Li-ion batteries",
+      "url": "https://sinews.siam.org/Details-Page/learning-based-faulty-state-estimation-in-lithium-ion-batteries"
+    },
+    {
+      "label": "NSF REU Site",
+      "url": "https://sites.google.com/uah.edu/uah-reu/home"
+    }
   ],
   "positions": [
     {

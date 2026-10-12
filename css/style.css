@@ -418,3 +418,10 @@ pre.bib { background: var(--bg-alt); border: 1px solid var(--line); border-radiu
 .sim-badge { margin-left: auto; font: .72rem var(--font-m); color: #9fb0c4; display: flex; align-items: center; gap: 6px; }
 .sim-badge::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: #3ddc84; }
 @media (max-width: 640px) { .sim-badge { margin-left: 0; width: 100%; } }
+
+/* ===== Mini live simulations on project cards ===== */
+.proj-img.sim-mini { position: relative; aspect-ratio: 16 / 9; background: var(--ink); overflow: hidden; }
+.proj-img.sim-mini canvas { display: block; width: 100%; height: 100%; }
+.sim-mini-tag { position: absolute; left: 10px; bottom: 8px; font: 500 .66rem var(--font-m); letter-spacing: .06em; text-transform: uppercase; color: #e9eef5; background: rgba(11,26,46,.7); border: 1px solid rgba(94,170,240,.3); padding: 2px 8px 2px 18px; border-radius: 999px; }
+.sim-mini-tag::before { content: ""; position: absolute; left: 7px; top: 50%; width: 6px; height: 6px; margin-top: -3px; border-radius: 50%; background: #3ddc84; }
+.proj-img.ph[data-area="robotics"] { background: linear-gradient(135deg, #0f2a33, #1f5566); }

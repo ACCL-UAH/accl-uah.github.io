@@ -7,7 +7,7 @@
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
   const esc = (s = "") => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   const TYPE_LABEL = { book: "Book", chapter: "Book chapter", journal: "Journal article", conference: "Conference paper", abstract: "Abstract / talk" };
-  const AREA_LABEL = { control: "Control", ai: "Artificial Intelligence", energy: "Energy Storage", education: "Education", sensing: "Sensing & IoT" };
+  const AREA_LABEL = { control: "Control", ai: "Artificial Intelligence", energy: "Energy Storage", robotics: "Robotics", education: "Education", sensing: "Sensing & IoT" };
 
   /* ---------- helpers ---------- */
   // Paragraphs: blank line in the JSON text ("\n\n") starts a new paragraph.

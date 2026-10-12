@@ -62,7 +62,9 @@
       ctx.fillStyle = s.c; ctx.fillRect(lx - 14, ly - 5, 10, 3); lx -= 24;
     }
   }
+  let MINI = false;   // when true, sims draw only their main visual, filling the canvas (project-card thumbnails)
   function layout(W, H, frac = 0.54) {
+    if (MINI) return { narrow: false, viz: { x: 0, y: 0, w: W, h: H }, side: { x: W + 60, y: 0, w: 320, h: H } };
     const narrow = W < 640, g = 12;
     if (!narrow) return { narrow, viz: { x: g, y: g, w: W * frac - g * 1.5, h: H - 2 * g }, side: { x: W * frac + g / 2, y: g, w: W * (1 - frac) - g * 1.5, h: H - 2 * g } };
     return { narrow, viz: { x: g, y: g, w: W - 2 * g, h: H * 0.48 - g }, side: { x: g, y: H * 0.48 + g / 2, w: W - 2 * g, h: H * 0.52 - g * 1.5 } };
@@ -139,61 +141,87 @@
     }
   };
 
-  /* ---------- 2. Vulnerability of learning-based controllers: stealthy reward poisoning ---------- */
+  /* ---------- 2. Vulnerability of learning-based controllers: reward poisoning vs. stability ---------- */
+  // Plant: unstable oscillator x' = A x + B u, A = [[0,1],[-2,0.3]], B = [0,1]ᵀ, Q = diag(1,0.2), R = 1.
+  // Its algebraic Riccati equation has two real solutions: P* (stabilizing, K* = [0.236, 1.173]) and
+  // P♭ (anti-stabilizing, K♭ = [0.236, −0.573]). Both satisfy the ARE exactly, so a policy that has been
+  // steered to P♭ looks "converged" to a residual check, yet the closed loop is unstable.
   SIMS["cps-vulnerability"] = {
-    title: "Stealthy reward poisoning and data-enabled detection",
-    caption: "Two learning agents estimate where the reward is maximized from noisy reward feedback. The amber agent's rewards are slowly biased by an attacker, a drift too small to notice step-to-step, so it learns the attacker's target. A detector compares learning against occasional trusted samples; when its CUSUM statistic crosses the threshold, the poisoned channel is isolated and the agent recovers.",
+    title: "Reward poisoning that breaks closed-loop stability",
+    caption: "Integral reinforcement learning tunes an LQR policy for an unstable oscillator from reward data. A poisoned reward steers policy iteration toward a second solution of the same algebraic Riccati equation, one that is not stabilizing. The amber loop's eigenvalues slide across the imaginary axis and its trajectory spirals outward, while the clean blue loop stays stable. Because both solutions satisfy the Riccati equation, the learned policy still looks converged to a residual check. A data-enabled detector that watches Lyapunov-energy growth raises the alarm and reverts to the last certified safe gain.",
     controls: [{ key: "attack", on: "Attack: on", off: "Attack: off", init: true }, { key: "detect", on: "Detector: on", off: "Detector: off", init: true }],
+    A: [[0, 1], [-2, 0.3]], Ks: [0.2361, 1.173], Kb: [0.2361, -0.573], Ps: [[2.5521, 0.2361], [0.2361, 1.173]], Pb: [[-1.3521, 0.2361], [0.2361, -0.573]],
     init(s) {
-      const G = [0.28, 0.62], A = [0.74, 0.3];
-      const ag = c => ({ p: [G[0] + rnd(-0.03, 0.03), G[1] + rnd(-0.03, 0.03)], g: G.slice(), c, trail: new Buf(140) });
-      Object.assign(s, { K: 0.15, Gn: 0.1, t: 0, G, A, clean: ag(C.blue), pois: ag(C.amber), S: 0, alarm: false, isolated: false, dC: new Buf(360), dP: new Buf(360), cus: new Buf(360), ref: G.slice() });
+      Object.assign(s, { t: 0, rho: 0, k: 0, nextIt: 2, xc: [1.2, 0], xp: [1.2, 0], kick: 3, tc: new Buf(260), tp: new Buf(260), eig: new Buf(60), S: 0, alarm: false, div: false,
+        H: { reC: new Buf(480), reP: new Buf(480), res: new Buf(480), cus: new Buf(480) } });
     },
+    K(rho) { return [this.Ks[0] + rho * (this.Kb[0] - this.Ks[0]), this.Ks[1] + rho * (this.Kb[1] - this.Ks[1])]; },
+    eig(K) { const a = -(K[1] - 0.3) / 2, d = (2 + K[0]) - ((K[1] - 0.3) ** 2) / 4; return d >= 0 ? [a, Math.sqrt(d)] : [a + Math.sqrt(-d), 0]; },  // roots of s² + (K2−0.3)s + (2+K1)
+    res(rho) {                                                   // ‖AᵀP + PA − PBBᵀP + Q‖ for P on the path P* → P♭
+      const A = this.A, P = [0, 1].map(i => [0, 1].map(j => this.Ps[i][j] + rho * (this.Pb[i][j] - this.Ps[i][j])));
+      const R = [[0, 0], [0, 0]], Q = [[1, 0], [0, 0.2]];
+      for (let i = 0; i < 2; i++) for (let j = 0; j < 2; j++) { let v = Q[i][j] - P[i][1] * P[1][j]; for (let k = 0; k < 2; k++) v += A[k][i] * P[k][j] + P[i][k] * A[k][j]; R[i][j] = v; }
+      return Math.hypot(R[0][0], R[0][1], R[1][0], R[1][1]);
+    },
+    f(x, K) { const u = -(K[0] * x[0] + K[1] * x[1]); return [x[1], -2 * x[0] + 0.3 * x[1] + u]; },
     step(s) {
-      const dt = 1 / 60; s.t += dt;
-      const ramp = s.attack && !s.isolated ? clamp((s.t - 2) / 8, 0, 1) : 0;
-      if (s.t % 0.5 < dt) s.ref = [s.G[0] + gauss() * 0.02, s.G[1] + gauss() * 0.02];   // trusted (secure) reward sample
-      for (const a of [s.clean, s.pois]) {
-        let z = [s.G[0] + gauss() * 0.05, s.G[1] + gauss() * 0.05];                         // what the reward data says the optimum is
-        if (a === s.pois) z = [z[0] + ramp * (s.A[0] - s.G[0]), z[1] + ramp * (s.A[1] - s.G[1])];
-        a.g = [lerp(a.g[0], z[0], 0.025), lerp(a.g[1], z[1], 0.025)];
-        a.p = [a.p[0] + 0.035 * (a.g[0] - a.p[0]) + gauss() * 0.003, a.p[1] + 0.035 * (a.g[1] - a.p[1]) + gauss() * 0.003];
-        a.trail.push(a.p.slice());
+      const dt = 0.01;
+      // policy-iteration updates (one every 0.7 s); poisoned learning converges geometrically toward P♭
+      if (s.t > s.nextIt) { s.nextIt += 0.7; if (s.attack && !s.alarm) { s.rho += 0.12 * (1 - s.rho); s.k++; } }
+      const Kp = this.K(s.rho);
+      for (let n = 0; n < 3; n++) {
+        s.t += dt;
+        if (s.t > s.kick) { const d = [rnd(-0.8, 0.8), rnd(-1.2, 1.2)]; s.xc = [s.xc[0] + d[0], s.xc[1] + d[1]]; if (!s.div) s.xp = [s.xp[0] + d[0], s.xp[1] + d[1]]; s.kick = s.t + rnd(3, 4.5); }
+        const fc = this.f(s.xc, this.Ks); s.xc = [s.xc[0] + dt * fc[0], s.xc[1] + dt * fc[1]];
+        if (!s.div) { const fp = this.f(s.xp, Kp); s.xp = [s.xp[0] + dt * fp[0], s.xp[1] + dt * fp[1]]; if (Math.hypot(...s.xp) > 3.4) s.div = true; }
       }
-      const dev = Math.hypot(s.pois.g[0] - s.ref[0], s.pois.g[1] - s.ref[1]);
-      s.S = Math.max(0, s.S + (dev - s.K) * s.Gn);
-      if (s.detect && !s.alarm && s.S > 1.2) { s.alarm = true; s.isolated = true; s.alarmT = s.t; }
-      s.dC.push(Math.hypot(s.clean.g[0] - s.G[0], s.clean.g[1] - s.G[1])); s.dP.push(Math.hypot(s.pois.g[0] - s.G[0], s.pois.g[1] - s.G[1])); s.cus.push(s.S);
-      if (s.isolated) s.S *= 0.985;
-      if (s.t > 18) this.init(s);
+      // data-enabled detector: normalized Lyapunov-energy rate V̇/V with V = xᵀP*x (always < 0 for the certified gain)
+      const x = s.xp, P = this.Ps, V = P[0][0] * x[0] ** 2 + 2 * P[0][1] * x[0] * x[1] + P[1][1] * x[1] ** 2;
+      const f = this.f(x, Kp), Vd = 2 * (x[0] * (P[0][0] * f[0] + P[0][1] * f[1]) + x[1] * (P[1][0] * f[0] + P[1][1] * f[1]));
+      s.S = Math.max(0, s.S + 0.03 * (Vd / Math.max(V, 1e-6) + 0.12));
+      if (s.detect && !s.alarm && s.S > 1) { s.alarm = true; s.alarmK = s.k; s.rho = 0; s.div = false; s.xp = [s.xp[0] * 0.5, s.xp[1] * 0.5]; }
+      if (s.alarm) s.S *= 0.97;
+      s.tc.push(s.xc.slice()); s.tp.push(s.xp.slice());
+      const ec = this.eig(this.Ks), ep = this.eig(Kp);
+      if (!s.eig.last || s.eig.last[0] !== ep[0]) s.eig.push(ep);
+      s.H.reC.push(ec[0]); s.H.reP.push(ep[0]); s.H.res.push(this.res(s.rho)); s.H.cus.push(s.S);
+      if (s.t > (s.alarm ? 26 : 34)) this.init(s);
     },
     draw(ctx, s, W, H) {
-      const L = layout(W, H), R = L.viz; panel(ctx, R, "Learning arena");
-      const X = v => R.x + 16 + v * (R.w - 32), Y = v => R.y + 30 + v * (R.h - 46);
-      ctx.strokeStyle = C.line; ctx.lineWidth = 1;
-      for (let i = 0; i <= 10; i++) { ctx.beginPath(); ctx.moveTo(X(i / 10), Y(0)); ctx.lineTo(X(i / 10), Y(1)); ctx.stroke(); ctx.beginPath(); ctx.moveTo(X(0), Y(i / 10)); ctx.lineTo(X(1), Y(i / 10)); ctx.stroke(); }
-      // reward landscape rings
-      for (let r = 1; r <= 4; r++) { ctx.strokeStyle = `rgba(61,220,132,${0.25 - r * 0.045})`; ctx.beginPath(); ctx.arc(X(s.G[0]), Y(s.G[1]), r * 26, 0, 7); ctx.stroke(); }
-      ctx.fillStyle = C.green; ctx.beginPath(); ctx.arc(X(s.G[0]), Y(s.G[1]), 6, 0, 7); ctx.fill();
-      text(ctx, "true optimum", X(s.G[0]) + 10, Y(s.G[1]) + 18, { size: 11, color: C.green });
-      ctx.strokeStyle = C.red; ctx.lineWidth = 2.5; const ax = X(s.A[0]), ay = Y(s.A[1]);
-      ctx.beginPath(); ctx.moveTo(ax - 7, ay - 7); ctx.lineTo(ax + 7, ay + 7); ctx.moveTo(ax + 7, ay - 7); ctx.lineTo(ax - 7, ay + 7); ctx.stroke();
-      text(ctx, "attacker's target", ax > R.x + R.w - 140 ? ax - 10 : ax + 10, ay - 10, { size: 11, color: C.red, align: ax > R.x + R.w - 140 ? "right" : "left" });
-      for (const a of [s.clean, s.pois]) {
-        ctx.strokeStyle = a.c + "88"; ctx.lineWidth = 1.5; ctx.beginPath();
-        a.trail.a.forEach((p, i) => i ? ctx.lineTo(X(p[0]), Y(p[1])) : ctx.moveTo(X(p[0]), Y(p[1]))); ctx.stroke();
-        ctx.save(); ctx.setLineDash([3, 3]); ctx.strokeStyle = a.c; ctx.beginPath(); ctx.moveTo(X(a.p[0]), Y(a.p[1])); ctx.lineTo(X(a.g[0]), Y(a.g[1])); ctx.stroke(); ctx.restore();
-        ctx.strokeStyle = a.c; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(X(a.g[0]), Y(a.g[1]), 5, 0, 7); ctx.stroke();
-        ctx.fillStyle = a.c; ctx.beginPath(); ctx.arc(X(a.p[0]), Y(a.p[1]), 8, 0, 7); ctx.fill();
+      const L = layout(W, H, 0.5);
+      const top = { x: L.viz.x, y: L.viz.y, w: L.viz.w, h: L.viz.h * 0.6 - 5 }, bot = { x: L.viz.x, y: L.viz.y + L.viz.h * 0.6 + 5, w: L.viz.w, h: L.viz.h * 0.4 - 5 };
+      // phase portrait
+      panel(ctx, top, "Closed-loop state trajectories (x₁, x₂)");
+      const pcx = top.x + top.w / 2, pcy = top.y + top.h / 2 + 8, sc = Math.min(top.w, top.h - 30) / 7.4;
+      ctx.strokeStyle = C.line; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(top.x + 10, pcy); ctx.lineTo(top.x + top.w - 10, pcy); ctx.moveTo(pcx, top.y + 26); ctx.lineTo(pcx, top.y + top.h - 8); ctx.stroke();
+      ctx.save(); rr(ctx, top.x + 4, top.y + 24, top.w - 8, top.h - 28, 6); ctx.clip();
+      for (const [tr, c] of [[s.tc, C.blue], [s.tp, s.div ? C.red : C.amber]]) {
+        ctx.strokeStyle = c; ctx.lineWidth = 1.8; ctx.beginPath();
+        tr.a.forEach((p, i) => { const X = pcx + p[0] * sc, Y = pcy - p[1] * sc; i ? ctx.lineTo(X, Y) : ctx.moveTo(X, Y); }); ctx.stroke();
+        const p = tr.last; if (p) { ctx.fillStyle = c; ctx.beginPath(); ctx.arc(pcx + p[0] * sc, pcy - p[1] * sc, 5, 0, 7); ctx.fill(); }
       }
-      let cx = R.x + 12; const cy = R.y + R.h - 30;
-      cx += chip(ctx, "clean agent", cx, cy, C.blue) + 6;
-      cx += chip(ctx, "poisoned agent", cx, cy, C.amber) + 6;
-      if (s.alarm) chip(ctx, "ALARM · channel isolated", cx, cy, C.red);
-      else if (s.attack && s.t > 2) chip(ctx, "attack in progress", cx, cy, C.red);
-      const [r1, r2] = rows(L.side, 2);
-      plot(ctx, r1, { title: "Learned optimum: error", n: 360, ymin: 0, ymax: 0.6, series: [{ d: s.dC, c: C.blue, name: "clean" }, { d: s.dP, c: C.amber, name: "poisoned" }] });
-      plot(ctx, r2, { title: "Detector statistic (CUSUM)", n: 360, ymin: 0, ymax: 2, thr: 1.2, thrLabel: "alarm", series: [{ d: s.cus, c: C.violet, name: s.detect ? "on" : "off" }] });
+      ctx.restore();
+      let cx = top.x + 12; const cy = top.y + top.h - 28;
+      cx += chip(ctx, "clean (K*)", cx, cy, C.blue) + 6;
+      if (s.alarm) chip(ctx, `ALARM · reverted to K* (iter ${s.alarmK})`, cx, cy, C.red);
+      else if (s.div) chip(ctx, "UNSTABLE · diverging", cx, cy, C.red);
+      else chip(ctx, s.attack ? `poisoned · iter ${s.k}` : "learner (no attack)", cx, cy, C.amber);
+      // s-plane
+      panel(ctx, bot, "Closed-loop eigenvalues (s-plane)");
+      const ox = bot.x + bot.w * 0.5, oy = bot.y + bot.h / 2 + 8, sx = (bot.w - 40) / 2 / 0.8, sy = (bot.h - 36) / 2 / 1.8;
+      ctx.fillStyle = "rgba(235,80,60,.10)"; ctx.fillRect(ox, bot.y + 24, bot.x + bot.w - 8 - ox, bot.h - 30);
+      text(ctx, "unstable", bot.x + bot.w - 14, bot.y + 40, { size: 10, color: C.red, align: "right" });
+      text(ctx, "stable", bot.x + 16, bot.y + 40, { size: 10, color: C.green });
+      ctx.strokeStyle = "rgba(233,238,245,.35)"; ctx.beginPath(); ctx.moveTo(ox, bot.y + 24); ctx.lineTo(ox, bot.y + bot.h - 6); ctx.moveTo(bot.x + 10, oy); ctx.lineTo(bot.x + bot.w - 10, oy); ctx.stroke();
+      text(ctx, "Re", bot.x + bot.w - 16, oy - 4, { size: 10, align: "right" }); text(ctx, "Im", ox + 4, bot.y + 36, { size: 10 });
+      const mark = (e, c, r = 6) => { for (const sg of [1, -1]) { const X = ox + e[0] * sx, Y = oy - sg * e[1] * sy; ctx.strokeStyle = c; ctx.lineWidth = 2.5; ctx.beginPath(); ctx.moveTo(X - r, Y - r); ctx.lineTo(X + r, Y + r); ctx.moveTo(X + r, Y - r); ctx.lineTo(X - r, Y + r); ctx.stroke(); } };
+      ctx.fillStyle = "rgba(245,165,36,.5)"; for (const e of s.eig.a) for (const sg of [1, -1]) { ctx.beginPath(); ctx.arc(ox + e[0] * sx, oy - sg * e[1] * sy, 2, 0, 7); ctx.fill(); }
+      mark(this.eig(this.Ks), C.blue); mark(this.eig(this.K(s.rho)), s.rho > 0.5 ? C.red : C.amber);
+      // side plots
+      const [r1, r2, r3] = rows(L.side, 3, 8);
+      plot(ctx, r1, { title: "Largest real part of closed-loop eigenvalues", n: 480, ymin: -0.6, ymax: 0.6, thr: 0, thrLabel: "stability boundary", series: [{ d: s.H.reC, c: C.blue, name: "clean" }, { d: s.H.reP, c: C.amber, name: "poisoned" }] });
+      plot(ctx, r2, { title: "Riccati residual of learned P (what a residual check sees)", n: 480, ymin: 0, ymax: 1, series: [{ d: s.H.res, c: C.violet, name: "‖ARE(P)‖" }] });
+      plot(ctx, r3, { title: "Lyapunov-energy detector (CUSUM)", n: 480, ymin: 0, ymax: 1.5, thr: 1, thrLabel: "alarm", series: [{ d: s.H.cus, c: C.green, name: s.detect ? "on" : "off" }] });
     }
   };
 
@@ -698,5 +726,35 @@
     render(); if (running) loop();
   }
 
-  window.ACCLSims = { has: id => !!SIMS[id], mount, ids: Object.keys(SIMS), _sims: SIMS };
+  /* ================= Mini thumbnails (project cards) ================= */
+  const minis = []; let miniRaf = 0;
+  const ZOOM = 1.45;                                   // draw at 1.45× logical size, then scale down to fit the card
+  function mini(cv, id) {
+    const def = SIMS[id]; if (!def) return false;
+    const m = { cv, def, ctx: cv.getContext("2d"), s: {}, vis: false, W: 0, H: 0 };
+    (def.controls || []).forEach(c => (m.s[c.key] = c.init));
+    def.init(m.s);
+    for (let k = 0; k < 150; k++) def.step(m.s);      // warm up so the thumbnail shows something interesting
+    const size = () => { const dpr = Math.min(devicePixelRatio || 1, 2); m.W = cv.clientWidth * ZOOM; m.H = cv.clientHeight * ZOOM; cv.width = cv.clientWidth * dpr; cv.height = cv.clientHeight * dpr; m.ctx.setTransform(dpr / ZOOM, 0, 0, dpr / ZOOM, 0, 0); drawMini(m); };
+    new ResizeObserver(size).observe(cv);
+    new IntersectionObserver(([e]) => { m.vis = e.isIntersecting; }).observe(cv);
+    minis.push(m); size();
+    if (!reduce && !miniRaf) miniRaf = requestAnimationFrame(miniLoop);
+    return true;
+  }
+  function drawMini(m) {
+    if (m.W < 60) return;
+    MINI = true;
+    try { m.ctx.fillStyle = C.bg; m.ctx.fillRect(0, 0, m.W, m.H); m.def.draw(m.ctx, m.s, m.W, m.H); } finally { MINI = false; }
+  }
+  function miniLoop() {
+    for (let i = minis.length - 1; i >= 0; i--) {
+      const m = minis[i];
+      if (!m.cv.isConnected) { minis.splice(i, 1); continue; }
+      if (m.vis && !document.hidden) { m.def.step(m.s); drawMini(m); }
+    }
+    miniRaf = minis.length ? requestAnimationFrame(miniLoop) : 0;
+  }
+
+  window.ACCLSims = { has: id => !!SIMS[id], mount, mini, ids: Object.keys(SIMS), _sims: SIMS };
 })();

@@ -12,12 +12,14 @@
   const AREA_PATTERNS = {
     control: /control|event-trigger|regulat|observer|sampling|game|attack|networked|identification|pseudospectral/i,
     ai: /learning|neural|reinforcement|meta|graph|deep|classification|autoencoder|evolutionary/i,
-    energy: /battery|lithium|li-ion|soh|soc\b|impedance|bms|electrochemical/i
+    energy: /battery|lithium|li-ion|soh|soc\b|impedance|bms|electrochemical/i,
+    robotics: /robot|manipulator|navigation|path planning|lane following|wheeled|autonomous vehicle|inspection/i
   };
   const ICONS = {
     control: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 12h4l3-7 4 14 3-7h4"/></svg>',
     ai: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="12" cy="18" r="2.5"/><path d="M8 7l3 9M16 7l-3 9M8.5 6h7"/></svg>',
-    energy: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="3" y="7" width="16" height="10" rx="2"/><path d="M21 10v4M11 9l-2 3h4l-2 3"/></svg>'
+    energy: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="3" y="7" width="16" height="10" rx="2"/><path d="M21 10v4M11 9l-2 3h4l-2 3"/></svg>',
+    robotics: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21h8M8 21v-4l5-6"/><circle cx="13" cy="11" r="1.6"/><path d="M14.2 9.8 18 6"/><path d="M18 6l2 1.5M18 6l1-2.3"/></svg>'
   };
 
   /* ---------- Data loading ---------- */
@@ -29,7 +31,7 @@
     return Object.fromEntries(names.map((n, i) => [n, vals[i]]));
   }
 
-  const AREA_LABEL = { control: "Control", ai: "Artificial Intelligence", energy: "Energy Storage", education: "Education", sensing: "Sensing & IoT" };
+  const AREA_LABEL = { control: "Control", ai: "Artificial Intelligence", energy: "Energy Storage", robotics: "Robotics", education: "Education", sensing: "Sensing & IoT" };
   /* ---------- Theme ---------- */
   function initTheme() {
     const root = document.documentElement;
@@ -199,7 +201,7 @@
           `<li><a href="detail.html?paper=${encodeURIComponent(p.id)}">${esc(p.title)}</a><small>${esc(p.venue)} · ${p.year}</small></li>`).join("")}</ul>
           <p><a class="text-link" href="#publications" data-area="${key}">See all related publications →</a></p></div>`;
       $("[data-area]", panel).addEventListener("click", () => {
-        const kw = { control: "control", ai: "learning", energy: "battery" }[key];
+        const kw = { control: "control", ai: "learning", energy: "battery", robotics: "robot" }[key];
         $("#pub-search").value = kw; $("#pub-search").dispatchEvent(new Event("input"));
       });
     }
@@ -403,9 +405,11 @@
     function update() {
       const res = projects.filter(p => (state.status === "all" || p.status === state.status) && (state.area === "all" || p.area === state.area));
       $("#proj-grid").innerHTML = res.length ? res.map(p => {
-        const img = (p.images || [])[0];
+        const img = (p.images || [])[0], sim = !img && window.ACCLSims && window.ACCLSims.has(p.id);
         return `<a class="proj" href="detail.html?project=${encodeURIComponent(p.id)}">
-          ${img ? `<img class="proj-img" src="${esc(img.src || img)}" alt="" loading="lazy">` : `<div class="proj-img ph" data-area="${esc(p.area)}">${ICONS[p.area] || ICONS.control}</div>`}
+          ${img ? `<img class="proj-img" src="${esc(img.src || img)}" alt="" loading="lazy">`
+            : sim ? `<div class="proj-img sim-mini"><canvas data-sim="${esc(p.id)}" aria-hidden="true"></canvas><span class="sim-mini-tag">live simulation</span></div>`
+            : `<div class="proj-img ph" data-area="${esc(p.area)}">${ICONS[p.area] || ICONS.control}</div>`}
           <div class="proj-body">
             <div class="proj-meta"><span class="dot ${p.status}"></span>${p.status === "current" ? "Current" : "Completed"}${p.period ? ` · ${esc(p.period)}` : ""}</div>
             <h3>${esc(p.title)}</h3>
@@ -414,6 +418,7 @@
             <span class="more-link">View project →</span>
           </div></a>`;
       }).join("") : `<p class="empty">No projects match.</p>`;
+      $$("#proj-grid canvas[data-sim]").forEach(cv => window.ACCLSims.mini(cv, cv.dataset.sim));
     }
     update();
   }
