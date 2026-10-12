@@ -470,7 +470,7 @@
   /* ---------- Boot ---------- */
   document.addEventListener("DOMContentLoaded", async () => {
     $("#year").textContent = new Date().getFullYear();
-    initTheme(); initNav(); initCanvas();
+    initTheme(); initNav();
     try {
       const data = await loadData();
       renderHero(data); renderAbout(data); renderResearch(data);
