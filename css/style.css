@@ -381,3 +381,6 @@ pre.bib { background: var(--bg-alt); border: 1px solid var(--line); border-radiu
 .star-badge.on-dark { color: #241600; background: var(--signal); border-color: var(--signal); margin: 4px 0 2px; }
 :root[data-theme="dark"] .star-badge:not(.on-dark) { color: var(--signal); background: #3a2c0d; border-color: #6b4d12; }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .star-badge:not(.on-dark) { color: var(--signal); background: #3a2c0d; border-color: #6b4d12; } }
+.tag.hl { background: #fff1d6; color: #6b4300; }
+:root[data-theme="dark"] .tag.hl { background: #3a2c0d; color: var(--signal); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .tag.hl { background: #3a2c0d; color: var(--signal); } }

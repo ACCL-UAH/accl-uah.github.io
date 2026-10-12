@@ -1,24 +1,180 @@
 {
   "courses": [
-    { "code": "EE 386", "title": "Introduction to Control and Robotic Systems", "institution": "University of Alabama in Huntsville", "level": "Undergraduate", "terms": ["Spring 2023"], "description": "", "project": "", "link": "" },
-    { "code": "EE 704", "title": "Nonlinear Control Systems", "institution": "University of Alabama in Huntsville", "level": "Graduate", "terms": ["Spring 2023"], "description": "", "project": "", "link": "" },
-    { "code": "EE 486 / 586", "title": "Introduction to Modern Control Systems", "institution": "University of Alabama in Huntsville", "level": "Undergraduate / Graduate", "terms": ["Fall 2022"], "description": "", "project": "", "link": "" },
-
-    { "code": "MERO 5060", "title": "Special Topics in Mechatronics", "institution": "Oklahoma State University", "level": "Graduate", "terms": [], "description": "", "project": "Autonomous vehicle simulator using ROS", "link": "" },
-    { "code": "MERO 5123", "title": "Mechatronics System Design II", "institution": "Oklahoma State University", "level": "Graduate", "terms": [], "description": "", "project": "Personalized cocktail machine with machine vision", "link": "" },
-    { "code": "MERO 5113", "title": "Mechatronics System Design I (with Lab)", "institution": "Oklahoma State University", "level": "Graduate", "terms": [], "description": "", "project": "Real-time gesture-controlled TurtleBot", "link": "" },
-    { "code": "EET/MET 3086", "title": "Fundamentals of Mechatronics (with Lab)", "institution": "Oklahoma State University", "level": "Undergraduate", "terms": [], "description": "", "project": "Bottling plant project", "link": "" },
-    { "code": "EET 4314", "title": "Elements of Control", "institution": "Oklahoma State University", "level": "Undergraduate", "terms": [], "description": "", "project": "Control lab", "link": "" },
-    { "code": "EET 4833 / 4843", "title": "Industrial Design Projects I and II", "institution": "Oklahoma State University", "level": "Undergraduate", "terms": [], "description": "", "project": "Speedfest", "link": "" },
-    { "code": "EET 3104", "title": "Elements of Electrical and Electronics", "institution": "Oklahoma State University", "level": "Undergraduate", "terms": [], "description": "", "project": "", "link": "" },
-    { "code": "MET 3417", "title": "Fundamentals of Pneumatic Fluid Power", "institution": "Oklahoma State University", "level": "Undergraduate", "terms": [], "description": "", "project": "Pneumatic trainer", "link": "" }
+    {
+      "code": "EE 610",
+      "title": "Reinforcement Learning and Control",
+      "institution": "University of Alabama in Huntsville",
+      "level": "Graduate",
+      "terms": [
+        "Summer 2024"
+      ],
+      "description": "",
+      "project": "",
+      "highlight": "",
+      "link": ""
+    },
+    {
+      "code": "EE 721",
+      "title": "Adaptive and Neural Network Control",
+      "institution": "University of Alabama in Huntsville",
+      "level": "Graduate",
+      "terms": [
+        "Fall 2023",
+        "Fall 2024"
+      ],
+      "description": "",
+      "project": "",
+      "highlight": "Developed new course",
+      "link": ""
+    },
+    {
+      "code": "EE 704",
+      "title": "Nonlinear Control Systems",
+      "institution": "University of Alabama in Huntsville",
+      "level": "Graduate",
+      "terms": [
+        "Spring 2023",
+        "Spring 2024",
+        "Spring 2026"
+      ],
+      "description": "",
+      "project": "",
+      "highlight": "",
+      "link": ""
+    },
+    {
+      "code": "EE 486 / 586",
+      "title": "Modern Control Systems",
+      "institution": "University of Alabama in Huntsville",
+      "level": "Undergraduate / Graduate",
+      "terms": [
+        "Fall 2022",
+        "Fall 2024",
+        "Fall 2025",
+        "Fall 2026"
+      ],
+      "description": "",
+      "project": "",
+      "highlight": "",
+      "link": ""
+    },
+    {
+      "code": "EE 386",
+      "title": "Introduction to Control and Robotic Systems",
+      "institution": "University of Alabama in Huntsville",
+      "level": "Undergraduate",
+      "terms": [
+        "Spring 2023",
+        "Spring 2024",
+        "Spring 2025",
+        "Fall 2026"
+      ],
+      "description": "",
+      "project": "",
+      "highlight": "Developed new lab (Spring 2025)",
+      "link": ""
+    },
+    {
+      "code": "MERO 5060",
+      "title": "Special Topics in Mechatronics",
+      "institution": "Oklahoma State University",
+      "level": "Graduate",
+      "terms": [],
+      "description": "",
+      "project": "Autonomous vehicle simulator using ROS",
+      "link": ""
+    },
+    {
+      "code": "MERO 5123",
+      "title": "Mechatronics System Design II",
+      "institution": "Oklahoma State University",
+      "level": "Graduate",
+      "terms": [],
+      "description": "",
+      "project": "Personalized cocktail machine with machine vision",
+      "link": ""
+    },
+    {
+      "code": "MERO 5113",
+      "title": "Mechatronics System Design I (with Lab)",
+      "institution": "Oklahoma State University",
+      "level": "Graduate",
+      "terms": [],
+      "description": "",
+      "project": "Real-time gesture-controlled TurtleBot",
+      "link": ""
+    },
+    {
+      "code": "EET/MET 3086",
+      "title": "Fundamentals of Mechatronics (with Lab)",
+      "institution": "Oklahoma State University",
+      "level": "Undergraduate",
+      "terms": [],
+      "description": "",
+      "project": "Bottling plant project",
+      "link": ""
+    },
+    {
+      "code": "EET 4314",
+      "title": "Elements of Control",
+      "institution": "Oklahoma State University",
+      "level": "Undergraduate",
+      "terms": [],
+      "description": "",
+      "project": "Control lab",
+      "link": ""
+    },
+    {
+      "code": "EET 4833 / 4843",
+      "title": "Industrial Design Projects I and II",
+      "institution": "Oklahoma State University",
+      "level": "Undergraduate",
+      "terms": [],
+      "description": "",
+      "project": "Speedfest",
+      "link": ""
+    },
+    {
+      "code": "EET 3104",
+      "title": "Elements of Electrical and Electronics",
+      "institution": "Oklahoma State University",
+      "level": "Undergraduate",
+      "terms": [],
+      "description": "",
+      "project": "",
+      "link": ""
+    },
+    {
+      "code": "MET 3417",
+      "title": "Fundamentals of Pneumatic Fluid Power",
+      "institution": "Oklahoma State University",
+      "level": "Undergraduate",
+      "terms": [],
+      "description": "",
+      "project": "Pneumatic trainer",
+      "link": ""
+    }
   ],
   "outreach": [
-    { "title": "NSF REU Site: Smart Personal Protective Equipment", "text": "Ten-week summer research program for nine undergraduates across UAH and Oklahoma State University.", "link": "https://sites.google.com/uah.edu/uah-reu/home" },
-    { "title": "Automate Your Imagination (AYI) Summer Camp", "text": "A one-week, hands-on camp introducing high school students to electrical engineering, industrial automation, and mechatronics through LabVIEW programming, sensor and actuator interfacing, and a final project.", "link": "" }
+    {
+      "title": "NSF REU Site: Smart Personal Protective Equipment",
+      "text": "Ten-week summer research program for nine undergraduates across UAH and Oklahoma State University.",
+      "link": "https://sites.google.com/uah.edu/uah-reu/home"
+    },
+    {
+      "title": "Automate Your Imagination (AYI) Summer Camp",
+      "text": "A one-week, hands-on camp introducing high school students to electrical engineering, industrial automation, and mechatronics through LabVIEW programming, sensor and actuator interfacing, and a final project.",
+      "link": ""
+    }
   ],
   "service": [
-    { "title": "Associate Editor, IEEE Transactions on Neural Networks and Learning Systems", "since": "2023" },
-    { "title": "Panelist, National Science Foundation proposal review", "since": "2023" }
+    {
+      "title": "Associate Editor, IEEE Transactions on Neural Networks and Learning Systems",
+      "since": "2023"
+    },
+    {
+      "title": "Panelist, National Science Foundation proposal review",
+      "since": "2023"
+    }
   ]
 }

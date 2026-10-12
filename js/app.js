@@ -451,7 +451,7 @@
           <div>
             <h3>${c.link ? `<a href="${esc(c.link)}" target="_blank" rel="noopener">${esc(c.title)}</a>` : esc(c.title)}</h3>
             ${c.description ? `<p>${esc(c.description)}</p>` : ""}
-            <div class="tags"><span class="tag">${esc(c.level)}</span>${(c.terms || []).map(t => `<span class="tag">${esc(t)}</span>`).join("")}${c.project ? `<span class="tag rich">Project: ${esc(c.project)}</span>` : ""}</div>
+            <div class="tags"><span class="tag">${esc(c.level)}</span>${(c.terms || []).map(t => `<span class="tag">${esc(t)}</span>`).join("")}${c.highlight ? `<span class="tag hl">★ ${esc(c.highlight)}</span>` : ""}${c.project ? `<span class="tag rich">Project: ${esc(c.project)}</span>` : ""}</div>
           </div>
         </div>`).join("");
     }
