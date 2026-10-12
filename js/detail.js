@@ -70,6 +70,7 @@
   }
 
   function wireUp() {
+    if (window.ACCLSims) $$(".sim-host").forEach(h => { try { window.ACCLSims.mount(h, h.dataset.sim); } catch (err) { console.error(err); h.closest(".d-sec").remove(); } });
     // lightbox for figures
     $$(".fig img").forEach(img => img.addEventListener("click", () => {
       const lb = document.createElement("div");
@@ -144,6 +145,7 @@
 
     const body = [
       section("Overview", `<div class="prose">${paras(p.summary)}${p.description ? paras(p.description) : ""}</div>`),
+      window.ACCLSims && window.ACCLSims.has(p.id) ? section("Concept simulation", `<div class="sim-host" data-sim="${esc(p.id)}"></div>`) : "",
       section("Objectives", bullets(p.objectives)),
       section("Highlights", bullets(p.highlights)),
       section("Results", (p.results ? `<div class="prose">${paras(p.results)}</div>` : "") + figures(p.figures)),

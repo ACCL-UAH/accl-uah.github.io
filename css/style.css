@@ -402,3 +402,19 @@ pre.bib { background: var(--bg-alt); border: 1px solid var(--line); border-radiu
 .dyn-dots button:hover { background: rgba(233,238,245,.55); }
 @media (max-width: 1100px) { .dyn-caption { position: relative; width: auto; max-width: 420px; margin-top: 28px; } }
 @media (prefers-reduced-motion: reduce) { .dyn-kicker::before { animation: none; } }
+
+/* ===== Project concept simulations ===== */
+.sim-host { background: var(--ink); border-radius: var(--radius); overflow: hidden; border: 1px solid #23395a; color: #e9eef5; }
+.sim-head { padding: 18px 20px 6px; }
+.sim-head h3 { color: #fff; font-size: 1.1rem; margin: 0 0 6px; }
+.sim-head p { margin: 0; color: #b9c6d6; font-size: .92rem; line-height: 1.55; max-width: 78ch; }
+.sim-canvas { padding: 6px 8px 0; }
+.sim-canvas canvas { display: block; width: 100%; }
+.sim-ctrls { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; padding: 10px 16px 16px; }
+.sim-ctrls button { font: 600 .82rem var(--font-b); padding: 7px 12px; border-radius: 8px; border: 1px solid rgba(233,238,245,.25); background: transparent; color: #e9eef5; cursor: pointer; }
+.sim-ctrls button:hover { border-color: rgba(233,238,245,.55); }
+.sim-ctrls button[aria-pressed="true"] { background: rgba(245,165,36,.16); border-color: var(--signal); color: var(--signal); }
+.sim-ctrls button[aria-pressed="false"] { opacity: .75; }
+.sim-badge { margin-left: auto; font: .72rem var(--font-m); color: #9fb0c4; display: flex; align-items: center; gap: 6px; }
+.sim-badge::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: #3ddc84; }
+@media (max-width: 640px) { .sim-badge { margin-left: 0; width: 100%; } }
