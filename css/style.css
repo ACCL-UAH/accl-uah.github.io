@@ -36,6 +36,7 @@
 
 /* ===== Base ===== */
 *, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }   /* hidden elements stay hidden even if a rule sets display */
 html { scroll-behavior: smooth; scroll-padding-top: 72px; }
 body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.6 var(--font-b); -webkit-font-smoothing: antialiased; }
 h1, h2, h3 { font-family: var(--font-h); line-height: 1.15; letter-spacing: -.02em; margin: 0 0 .5em; }
