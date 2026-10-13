@@ -279,7 +279,7 @@
 
       $$(".bar", chart).forEach(b => b.classList.toggle("on", b.dataset.y === String(state.year)));
       count.textContent = `${res.length} of ${publications.length} items`;
-      if (!res.length) { list.innerHTML = `<li class="empty">No publications match these filters.</li>`; more.hidden = true; return; }
+      if (!res.length) { list.innerHTML = `<li class="empty">No publications match these filters.</li>`; more.hidden = true; more.style.display = "none"; return; }
 
       list.innerHTML = res.slice(0, state.limit).map(p => {
         const authors = hl(p.authors, state.q).replace(/(A(?:vimanyu|\.)\s*Sahoo)/g, "<b>$1</b>");
@@ -295,8 +295,9 @@
           ${p.link ? `<a class="go" href="${esc(p.link)}" target="_blank" rel="noopener" aria-label="Open paper">↗</a>` : "<span></span>"}
         </li>`;
       }).join("");
-      more.hidden = res.length <= state.limit;
-      more.textContent = `Show more (${res.length - state.limit} remaining)`;
+      const left = res.length - state.limit;
+      more.hidden = left <= 0; more.style.display = left > 0 ? "" : "none";
+      more.textContent = `Show more (${Math.max(0, left)} remaining)`;
     }
     update();
   }
@@ -343,7 +344,8 @@
           <div class="d">${fmt(n.date)} <span class="tag">${esc(n.tag)}</span></div>
           <p>${esc(n.text)}${n.link ? ` <a href="${esc(n.link)}" target="_blank" rel="noopener">Read more ↗</a>` : ""}</p>
         </li>`).join("");
-      more.hidden = res.length <= state.limit;
+      const left = res.length - state.limit;
+      more.hidden = left <= 0; more.style.display = left > 0 ? "" : "none";
     }
     update();
 
